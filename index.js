@@ -20,7 +20,7 @@ app.use('/uploads', express.static('uploads'));
 
 
 
-const PORT = process.env.PORT || 3018;
+const PORT = process.env.PORT || 3000|| 3017;
 
 dotenv.config();
 
@@ -33,12 +33,13 @@ dotenv.config();
 
 
 //  const server = require('https').createServer(options, app);
-const server = require('https').createServer(app);
+const server = require('http').createServer(app);
 
-
+console.log("==========> ============> ",process.env.DB_CONNECT)
 //** Datrabase Connection **//
 mongoose.connect(
   process.env.DB_CONNECT,
+  
   {
     useUnifiedTopology: true,
     useNewUrlParser: true
