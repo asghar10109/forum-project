@@ -33,7 +33,7 @@ dotenv.config();
 
 
 //  const server = require('https').createServer(options, app);
-const server = require('http').createServer(app);
+const server = require('https').createServer(app);
 
 
 //** Datrabase Connection **//
