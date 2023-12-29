@@ -9,7 +9,7 @@ const sendEmail = require("../../config/mailer");
 const login = async (req, res) => {
     try {
         const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-
+        console.log(req.body);
         if (!req.body.email) {
             return res.status(400).send({
                 status: 0,
