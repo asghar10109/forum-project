@@ -7,104 +7,106 @@ const sendEmail = require("../../config/mailer");
 
 /** Login user */
 const login = async (req, res) => {
-    try {
-        const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-        console.log(req.body);
-        if (!req.body.email) {
-            return res.status(400).send({
-                status: 0,
-                message: "Email field is required.",
-            });
-        }
+    // try {
+    //     const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    //     console.log(req.body);
+    //     if (!req.body.email) {
+    //         return res.status(400).send({
+    //             status: 0,
+    //             message: "Email field is required.",
+    //         });
+    //     }
 
-        else if (!req.body.password) {
-            return res.status(400).send({
-                status: 0,
-                message: "Password field is required.",
-            });
-        }
+    //     else if (!req.body.password) {
+    //         return res.status(400).send({
+    //             status: 0,
+    //             message: "Password field is required.",
+    //         });
+    //     }
 
-        else if (!req.body.email.match(emailValidation)) {
-            return res.status(400).send({
-                status: 0,
-                message: "Invalid email address"
-            })
-        }
-        else if (!req.body.user_device_type) {
-            return res.status(400).send({
-                status: 0,
-                message: "User Device Type field is required"
-            });
-        }
-        else if (!req.body.user_device_token) {
-            return res.status(400).send({
-                status: 0,
-                message: "User Device Token field is required"
-            });
-        }
+    //     else if (!req.body.email.match(emailValidation)) {
+    //         return res.status(400).send({
+    //             status: 0,
+    //             message: "Invalid email address"
+    //         })
+    //     }
+    //     else if (!req.body.user_device_type) {
+    //         return res.status(400).send({
+    //             status: 0,
+    //             message: "User Device Type field is required"
+    //         });
+    //     }
+    //     else if (!req.body.user_device_token) {
+    //         return res.status(400).send({
+    //             status: 0,
+    //             message: "User Device Token field is required"
+    //         });
+    //     }
 
-        else {
+    //     else {
 
-            const findUserDetails = await User.findOne({ email: req.body.email });
-            if (findUserDetails) {
+    //         const findUserDetails = await User.findOne({ email: req.body.email });
+    //         if (findUserDetails) {
 
-                const isMatch = await bcrypt.compare(req.body.password, findUserDetails?.password)
-                if (!isMatch) {
-                    return res.status(400).send({ status: 0, message: "Password is incorrect" });
-                }
+    //             const isMatch = await bcrypt.compare(req.body.password, findUserDetails?.password)
+    //             if (!isMatch) {
+    //                 return res.status(400).send({ status: 0, message: "Password is incorrect" });
+    //             }
 
-                if (findUserDetails?.isApproved === 0) {
-                    return res.status(400).send({
-                        status: 0,
-                        message: "Your request has been send to the administrator",
+    //             if (findUserDetails?.isApproved === 0) {
+    //                 return res.status(400).send({
+    //                     status: 0,
+    //                     message: "Your request has been send to the administrator",
 
-                    });
-                }
+    //                 });
+    //             }
 
-                else if (findUserDetails.is_blocked == 1) {
-                    return res.status(400).send({
-                        status: 0,
-                        message: "You are temporarily blocked by Admin",
-                    });
-                }
+    //             else if (findUserDetails.is_blocked == 1) {
+    //                 return res.status(400).send({
+    //                     status: 0,
+    //                     message: "You are temporarily blocked by Admin",
+    //                 });
+    //             }
 
-                else if (findUserDetails.is_profile_deleted == 1) {
-                    return res.status(400).send({
-                        status: 0,
-                        message: "Account has been deleted",
-                    });
-                }
+    //             else if (findUserDetails.is_profile_deleted == 1) {
+    //                 return res.status(400).send({
+    //                     status: 0,
+    //                     message: "Account has been deleted",
+    //                 });
+    //             }
 
-                else {
+    //             else {
 
-                    await findUserDetails.generateAuthToken();
-                    const updateUser = await User.findOneAndUpdate({ _id: findUserDetails._id }, {
-                        user_device_type: req.body.user_device_type,
-                        user_device_token: req.body.user_device_token
-                    }, { new: true })
+    //                 await findUserDetails.generateAuthToken();
+    //                 const updateUser = await User.findOneAndUpdate({ _id: findUserDetails._id }, {
+    //                     user_device_type: req.body.user_device_type,
+    //                     user_device_token: req.body.user_device_token
+    //                 }, { new: true })
 
-                    return res.status(200).send({
-                        status: 1, message: "Login successfully",
-                        data: updateUser
-                    })
-                }
-            }
-            else {
-                return res.status(400).send({
-                    status: 0,
-                    message: "User Not Found"
-                })
+    //                 return res.status(200).send({
+    //                     status: 1, message: "Login successfully",
+    //                     data: updateUser
+    //                 })
+    //             }
+    //         }
+    //         else {
+    //             return res.status(400).send({
+    //                 status: 0,
+    //                 message: "User Not Found"
+    //             })
 
-            }
+    //         }
 
-        }
-    } catch (error) {
-        console.log(error.message)
-        return res.status(500).send({
-            status: 0,
-            message: error.message,
-        });
-    }
+    //     }
+    // } catch (error) {
+    //     console.log(error.message)
+    //     return res.status(500).send({
+    //         status: 0,
+    //         message: error.message,
+    //     });
+    // }
+
+    res.send({ status: 200, message:"hello salam "})
 };
 
 /** Register user */
